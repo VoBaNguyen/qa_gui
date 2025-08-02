@@ -351,66 +351,148 @@ class MainContentArea(QWidget):
         self.content_stack.addWidget(page)  # Index 1
     
     def create_compare_packages_page(self):
-        """Create Package Comparison interface - simplified without common settings"""
+        """Create Package Comparison interface with all required fields"""
         page = QWidget()
         layout = QVBoxLayout()
-        
+
         # Package Golden Group
         golden_group = QGroupBox("Package Golden")
         golden_layout = QFormLayout()
-        
+
+        # Source selection
+        self.golden_radio_existed = QRadioButton("Existed Package")
+        self.golden_radio_new = QRadioButton("Create New")
+        self.golden_radio_existed.setChecked(True)
+        golden_radio_layout = QHBoxLayout()
+        golden_radio_layout.addWidget(self.golden_radio_existed)
+        golden_radio_layout.addWidget(self.golden_radio_new)
+        golden_layout.addRow("Source:", golden_radio_layout)
+
         # Golden Package Path
-        golden_path_layout = QHBoxLayout()
         self.golden_path_edit = QLineEdit("./package_golden")
         self.golden_path_edit.setPlaceholderText("Enter golden package path")
         browse_golden_path_btn = QPushButton("Browse")
+        golden_path_layout = QHBoxLayout()
         golden_path_layout.addWidget(self.golden_path_edit)
         golden_path_layout.addWidget(browse_golden_path_btn)
         golden_layout.addRow("Package Path:", golden_path_layout)
-        
+
+        # Golden CDF
+        self.golden_cdf_edit = QLineEdit("<PACKAGE>/qa_<TECHLIB>__CDF")
+        self.golden_cdf_edit.setPlaceholderText("Enter golden CDF folder path")
+        browse_golden_cdf_btn = QPushButton("Browse")
+        golden_cdf_layout = QHBoxLayout()
+        golden_cdf_layout.addWidget(self.golden_cdf_edit)
+        golden_cdf_layout.addWidget(browse_golden_cdf_btn)
+        golden_layout.addRow("CDF Test Cases Folder:", golden_cdf_layout)
+
+        # Golden TA
+        self.golden_ta_edit = QLineEdit("<PACKAGE>/qa_<TECHLIB>__TA")
+        self.golden_ta_edit.setPlaceholderText("Enter golden TA folder path")
+        browse_golden_ta_btn = QPushButton("Browse")
+        golden_ta_layout = QHBoxLayout()
+        golden_ta_layout.addWidget(self.golden_ta_edit)
+        golden_ta_layout.addWidget(browse_golden_ta_btn)
+        golden_layout.addRow("TA Test Cases Folder:", golden_ta_layout)
+
         # Golden Waived Rules
-        golden_waived_layout = QHBoxLayout()
         self.golden_waived_edit = QLineEdit("<PACKAGE>/waived_rules_drc.xls")
         self.golden_waived_edit.setPlaceholderText("Enter waived rules DRC file path")
         view_golden_waived_btn = QPushButton("View")
         browse_golden_waived_btn = QPushButton("Browse")
+        golden_waived_layout = QHBoxLayout()
         golden_waived_layout.addWidget(self.golden_waived_edit)
         golden_waived_layout.addWidget(view_golden_waived_btn)
         golden_waived_layout.addWidget(browse_golden_waived_btn)
         golden_layout.addRow("Waived Rules:", golden_waived_layout)
-        
+
+        # PDK Version
+        self.golden_pdk_version_combo = QComboBox()
+        self.golden_pdk_version_combo.addItems(["Undefined"])
+        golden_layout.addRow("PDK Version:", self.golden_pdk_version_combo)
+
+        # Golden cds.lib
+        self.golden_cds_lib_edit = QLineEdit("<PACKAGE>/cds.lib")
+        self.golden_cds_lib_edit.setPlaceholderText("Enter cds.lib file path")
+        browse_golden_cds_lib_btn = QPushButton("Browse")
+        golden_cds_lib_layout = QHBoxLayout()
+        golden_cds_lib_layout.addWidget(self.golden_cds_lib_edit)
+        golden_cds_lib_layout.addWidget(browse_golden_cds_lib_btn)
+        golden_layout.addRow("cds.lib:", golden_cds_lib_layout)
+
         golden_group.setLayout(golden_layout)
-        
+
         # Package Alpha Group
         alpha_group = QGroupBox("Package Alpha")
         alpha_layout = QFormLayout()
-        
+
+        # Source selection
+        self.alpha_radio_existed = QRadioButton("Existed Package")
+        self.alpha_radio_new = QRadioButton("Create New")
+        self.alpha_radio_existed.setChecked(True)
+        alpha_radio_layout = QHBoxLayout()
+        alpha_radio_layout.addWidget(self.alpha_radio_existed)
+        alpha_radio_layout.addWidget(self.alpha_radio_new)
+        alpha_layout.addRow("Source:", alpha_radio_layout)
+
         # Alpha Package Path
-        alpha_path_layout = QHBoxLayout()
         self.alpha_path_edit = QLineEdit("./package_alpha")
         self.alpha_path_edit.setPlaceholderText("Enter alpha package path")
         browse_alpha_path_btn = QPushButton("Browse")
+        alpha_path_layout = QHBoxLayout()
         alpha_path_layout.addWidget(self.alpha_path_edit)
         alpha_path_layout.addWidget(browse_alpha_path_btn)
         alpha_layout.addRow("Package Path:", alpha_path_layout)
-        
+
+        # Alpha CDF
+        self.alpha_cdf_edit = QLineEdit("<PACKAGE>/qa_<TECHLIB>__CDF")
+        self.alpha_cdf_edit.setPlaceholderText("Enter alpha CDF folder path")
+        browse_alpha_cdf_btn = QPushButton("Browse")
+        alpha_cdf_layout = QHBoxLayout()
+        alpha_cdf_layout.addWidget(self.alpha_cdf_edit)
+        alpha_cdf_layout.addWidget(browse_alpha_cdf_btn)
+        alpha_layout.addRow("CDF Test Cases Folder:", alpha_cdf_layout)
+
+        # Alpha TA
+        self.alpha_ta_edit = QLineEdit("<PACKAGE>/qa_<TECHLIB>__TA")
+        self.alpha_ta_edit.setPlaceholderText("Enter alpha TA folder path")
+        browse_alpha_ta_btn = QPushButton("Browse")
+        alpha_ta_layout = QHBoxLayout()
+        alpha_ta_layout.addWidget(self.alpha_ta_edit)
+        alpha_ta_layout.addWidget(browse_alpha_ta_btn)
+        alpha_layout.addRow("TA Test Cases Folder:", alpha_ta_layout)
+
         # Alpha Failed Rules
-        alpha_failed_layout = QHBoxLayout()
         self.alpha_failed_edit = QLineEdit("<PACKAGE>/failed_rules.xls")
         self.alpha_failed_edit.setPlaceholderText("Enter failed rules file path")
         view_alpha_failed_btn = QPushButton("View")
         browse_alpha_failed_btn = QPushButton("Browse")
+        alpha_failed_layout = QHBoxLayout()
         alpha_failed_layout.addWidget(self.alpha_failed_edit)
         alpha_failed_layout.addWidget(view_alpha_failed_btn)
         alpha_failed_layout.addWidget(browse_alpha_failed_btn)
         alpha_layout.addRow("Failed Rules:", alpha_failed_layout)
-        
+
+        # PDK Version
+        self.alpha_pdk_version_combo = QComboBox()
+        self.alpha_pdk_version_combo.addItems(["v1.0", "Undefined", "v2.0"])
+        alpha_layout.addRow("PDK Version:", self.alpha_pdk_version_combo)
+
+        # Alpha cds.lib
+        self.alpha_cds_lib_edit = QLineEdit("<PACKAGE>/cds.lib")
+        self.alpha_cds_lib_edit.setPlaceholderText("Enter cds.lib file path")
+        browse_alpha_cds_lib_btn = QPushButton("Browse")
+        alpha_cds_lib_layout = QHBoxLayout()
+        alpha_cds_lib_layout.addWidget(self.alpha_cds_lib_edit)
+        alpha_cds_lib_layout.addWidget(browse_alpha_cds_lib_btn)
+        alpha_layout.addRow("cds.lib:", alpha_cds_lib_layout)
+
         alpha_group.setLayout(alpha_layout)
-        
+
         # Comparison Settings Group
         comparison_group = QGroupBox("Comparison Settings")
         comparison_layout = QFormLayout()
-        
+
         # Exclude Layers
         exclude_layers_layout = QHBoxLayout()
         self.exclude_layers_edit = QLineEdit("<PACKAGE>/exclude_layers.txt")
@@ -421,7 +503,7 @@ class MainContentArea(QWidget):
         exclude_layers_layout.addWidget(view_exclude_btn)
         exclude_layers_layout.addWidget(browse_exclude_btn)
         comparison_layout.addRow("Exclude Layers:", exclude_layers_layout)
-        
+
         # Run Directory
         compare_run_dir_layout = QHBoxLayout()
         self.compare_run_dir_edit = QLineEdit("./run_dir_compare")
@@ -430,7 +512,7 @@ class MainContentArea(QWidget):
         compare_run_dir_layout.addWidget(self.compare_run_dir_edit)
         compare_run_dir_layout.addWidget(browse_compare_run_btn)
         comparison_layout.addRow("Run Directory:", compare_run_dir_layout)
-        
+
         # Options
         compare_options_layout = QHBoxLayout()
         self.cleanup_compare_cb = QCheckBox("Cleanup Run Directory")
@@ -438,9 +520,9 @@ class MainContentArea(QWidget):
         compare_options_layout.addWidget(self.cleanup_compare_cb)
         compare_options_layout.addWidget(self.rve_cb)
         comparison_layout.addRow("Options:", compare_options_layout)
-        
+
         comparison_group.setLayout(comparison_layout)
-        
+
         # Action buttons
         action_layout = QHBoxLayout()
         action_layout.addStretch()
@@ -448,20 +530,20 @@ class MainContentArea(QWidget):
         compare_btn = QPushButton("Compare")
         stop_compare_btn = QPushButton("Stop")
         stop_compare_btn.setEnabled(False)
-        
+
         verify_compare_btn.clicked.connect(self.verify_comparison)
         compare_btn.clicked.connect(self.compare_packages)
-        
+
         action_layout.addWidget(verify_compare_btn)
         action_layout.addWidget(compare_btn)
         action_layout.addWidget(stop_compare_btn)
-        
+
         layout.addWidget(golden_group)
         layout.addWidget(alpha_group)
         layout.addWidget(comparison_group)
         layout.addLayout(action_layout)
         layout.addStretch()
-        
+
         page.setLayout(layout)
         self.content_stack.addWidget(page)  # Index 2
     
